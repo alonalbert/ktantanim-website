@@ -1,0 +1,47 @@
+<?php
+
+class HoverButton
+{
+
+    private $name;
+    private $text;
+    private $button;
+    private $hover;
+
+    const ROOT = "http://ktantanim.com/ktantanim/sites/Ktantanim/graphics/text/";
+
+    public static function init() {
+        echo '
+            <style>
+                .hover-button { text-decoration: none}
+            </style>
+            <script type="text/javascript">
+              function PreloadImage(path) {
+                var image = new Image(); image.src=path; return image;
+              }
+            </script>';
+    }
+
+    public function __construct($name, $text) {
+        $this->name = $name;
+        $this->text = $text;
+        $this->button = self::ROOT . "button-" . $text . "-Droid Serif-10-Black-Regular.gif";
+        $this->hover = self::ROOT . "button-hover-" . $text . "-Droid Serif-10-Black-Regular.gif";
+    }
+
+    public function render() {
+        echo " 
+        <!-- $this->name Button -->
+        <script type='text/javascript'>
+            " . $this->name . "Image=PreloadImage('" . $this->button . "');
+            " . $this->name . "HoverImage=PreloadImage('" . $this->hover . "');
+        </script>
+        
+        <a href='$this->name.aspx?lang=en' class='hover-button'
+            onmouseover=" . '"' . "document['". $this->name . "Button'].src=" . $this->name . "HoverImage.src" . '"' ."
+            onmouseout=" . '"' . "document['" . $this->name . "Button'].src=" . $this->name . "Image.src" . '"' .">
+            <img alt='" . $this->name . "' src='" . $this->button . "'
+                style='border: none; vertical-align: middle' id='" . $this->name . "Button' name='" . $this->name . "Button' />
+        </a>";
+    }
+}
