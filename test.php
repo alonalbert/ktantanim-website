@@ -13,8 +13,7 @@ require_once "Colors.php";
 
 <?php
     $b = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$RED);
-    $b->render("AboutMe", "About Me", "http://google.com");
-    $b->render("Hello", "Hello", "http://google.com");
+    $b->render("http://google.com", "Download Original");
 ?>
 
 

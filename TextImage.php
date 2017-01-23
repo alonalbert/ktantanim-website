@@ -56,7 +56,7 @@ class TextImage {
 
             // Copy base image onto a new image
             //
-            $newImage = imagecreatetruecolor($width, $height);
+            $newImage = imagecreatetruecolor($newWidth, $newHeight);
 
             imagealphablending($newImage, false);
             imagesavealpha($newImage,true);
