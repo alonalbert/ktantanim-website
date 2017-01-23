@@ -2,6 +2,7 @@
 
 <?php
 require_once "HoverButton.php";
+require_once "Colors.php";
 ?>
 
 <head>
@@ -11,8 +12,9 @@ require_once "HoverButton.php";
 <body>
 
 <?php
-    $b = new HoverButton("AboutMe", "About Me");
-    $b->render();
+    $b = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$RED);
+    $b->render("AboutMe", "About Me", "http://google.com");
+    $b->render("Hello", "Hello", "http://google.com");
 ?>
 
 

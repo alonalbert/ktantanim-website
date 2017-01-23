@@ -12,6 +12,16 @@ class HoverButton
 
     const ROOT = "http://ktantanim.com/ktantanim/sites/Ktantanim/graphics/text/";
 
+    private $buttonImage = 'img/button.png';
+
+    private $hoverImage;
+
+    private $fontName;
+
+    private $textSize = 13;
+
+    private $colorArray = '#000000';
+
     public static function init() {
         echo '
             <style>
@@ -24,26 +34,30 @@ class HoverButton
             </script>';
     }
 
-    public function __construct($name, $text) {
-        $this->name = $name;
-        $this->text = $text;
-        $this->button =  TextImage::create('img/button.png', $text, 'david', 12, 'Regular', 'Black');
-        $this->hover =  TextImage::create('img/button-hover.png', $text, 'david', 12, 'Regular', 'Black');
+    public function __construct($buttonImage, $hoverImage, $fontName, $textSize, $colorArray) {
+        $this->buttonImage = $buttonImage;
+        $this->hoverImage = $hoverImage;
+        $this->fontName = $fontName;
+        $this->textSize = $textSize;
+        $this->colorArray = $colorArray;
     }
 
-    public function render() {
+    public function render($name, $text, $url) {
+        $button =  TextImage::create($this->buttonImage, $text, $this->fontName, $this->textSize, $this->colorArray);
+        $hover =  TextImage::create($this->hoverImage, $text, $this->fontName, $this->textSize, $this->colorArray);
+
         echo " 
         <!-- $this->name Button -->
         <script type='text/javascript'>
-            " . $this->name . "Image=PreloadImage('" . $this->button . "');
-            " . $this->name . "HoverImage=PreloadImage('" . $this->hover . "');
+            " . $name . "Image=PreloadImage('" . $button . "');
+            " . $name . "HoverImage=PreloadImage('" . $hover . "');
         </script>
         
-        <a href='$this->name.aspx?lang=en' class='hover-button'
-            onmouseover=" . '"' . "document['". $this->name . "Button'].src=" . $this->name . "HoverImage.src" . '"' ."
-            onmouseout=" . '"' . "document['" . $this->name . "Button'].src=" . $this->name . "Image.src" . '"' .">
-            <img alt='" . $this->name . "' src='" . $this->button . "'
-                style='border: none; vertical-align: middle' id='" . $this->name . "Button' name='" . $this->name . "Button' />
+        <a href='$url' class='hover-button'
+            onmouseover=" . '"' . "document['". $name . "Button'].src=" . $name . "HoverImage.src" . '"' ."
+            onmouseout=" . '"' . "document['" . $name . "Button'].src=" . $name . "Image.src" . '"' .">
+            <img alt='" . $name . "' src='" . $button . "'
+                style='border: none; vertical-align: middle' id='" . $name . "Button' name='" . $name . "Button' />
         </a>";
     }
 }
