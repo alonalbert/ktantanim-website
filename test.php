@@ -10,8 +10,6 @@ require_once "HoverButton.php";
 </head>
 <body>
 
-<!-- Initialize Hovver Support -->
-
 <?php
     $b = new HoverButton("AboutMe", "About Me");
     $b->render();

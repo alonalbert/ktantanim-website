@@ -55,18 +55,22 @@ class TextImage {
         // Copy base image onto a new image
         //
         $newImage = imagecreatetruecolor($width, $height);
-        $Image = imagecreatefromgif($imageFile);
+        imagealphablending($newImage, false);
+        imagesavealpha($newImage,true);
+
+
+        $black = imagecolorallocate($newImage, 0, 0, 0);
+        $Image = imagecreatefrompng($imageFile);
         imagecopyresampled($newImage, $Image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 
         // Write the text
         //
-        $black = imagecolorallocate($newImage, 0, 0, 0);
 
         $x = ($newWidth - $textWidth) / 2;
-        $y = ($newHeight - $textHeight) / 2;
+        $y = $newHeight - ($newHeight - $textHeight) / 2;
         imagettftext($newImage, $textSize, 0, $x, $y, $black, $fonfFile, $text);
 
-        imagegif($newImage, $newImageFile);
+        imagepng($newImage, $newImageFile);
 
         return $newImageFile;
     }

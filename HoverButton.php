@@ -27,8 +27,8 @@ class HoverButton
     public function __construct($name, $text) {
         $this->name = $name;
         $this->text = $text;
-        $this->button =  TextImage::create('img/button.gif', $text, 'david', 10, 'Regular', 'Black');
-        $this->hover =  TextImage::create('img/button-hover.gif', $text, 'david', 10, 'Regular', 'Black');
+        $this->button =  TextImage::create('img/button.png', $text, 'david', 12, 'Regular', 'Black');
+        $this->hover =  TextImage::create('img/button-hover.png', $text, 'david', 12, 'Regular', 'Black');
     }
 
     public function render() {
