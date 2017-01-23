@@ -1,7 +1,7 @@
 <html>
 
 <?php
-require_once "HoverButton.php"
+require_once "HoverButton.php";
 ?>
 
 <head>

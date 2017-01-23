@@ -1,5 +1,7 @@
 <?php
 
+require_once "TextImage.php";
+
 class HoverButton
 {
 
@@ -25,8 +27,8 @@ class HoverButton
     public function __construct($name, $text) {
         $this->name = $name;
         $this->text = $text;
-        $this->button = self::ROOT . "button-" . $text . "-Droid Serif-10-Black-Regular.gif";
-        $this->hover = self::ROOT . "button-hover-" . $text . "-Droid Serif-10-Black-Regular.gif";
+        $this->button =  TextImage::create('img/button.gif', $text, 'david', 10, 'Regular', 'Black');
+        $this->hover =  TextImage::create('img/button-hover.gif', $text, 'david', 10, 'Regular', 'Black');
     }
 
     public function render() {
