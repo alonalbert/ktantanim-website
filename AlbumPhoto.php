@@ -6,8 +6,8 @@ require_once "Photo.php";
 require_once "TextImage.php";
 
 $size = 'web';
-$albumPath = '2016/PhotoAlbums/01 Yosemite';
-$index = 0;
+$albumPath = $_GET['album'];
+$index = $_GET['index'];
 $photos = glob("photos/$albumPath/*.jpg");
 $photo = $photos[$index];
 $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
@@ -47,11 +47,13 @@ if (isHebrew()) {
 
         <!-- Hover Buttons -->
         <?php
+        $count = count($photos);
+        $nextIndex = ($index + 1) % $count;
+        $prevIndex = $index > 0 ? $index - 1 : $count - 1;
         $button = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$BLACK);
-
         $button->render('todo.php', message('Album'));
-        $button->render('todo.php', message('Previous'));
-        $button->render('todo.php', message('Next'));
+        $button->render("AlbumPhoto.php?locale=$locale&album=$albumPath&index=" . $prevIndex, message('Previous'));
+        $button->render("AlbumPhoto.php?locale=$locale&album=$albumPath&index=" . $nextIndex, message('Next'));
         $button->render('todo.php', message('Download Original'));
         ?>
       </p>
