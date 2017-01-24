@@ -3,6 +3,7 @@
 <?php
 require_once "Colors.php";
 require_once "HoverButton.php";
+require_once "Localization.php";
 require_once "TextImage.php";
 ?>
 
@@ -37,10 +38,10 @@ $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
         <?php
         $button = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$BLACK);
 
-        $button->render('todo.php', 'Album');
-        $button->render('todo.php', 'Previous');
-        $button->render('todo.php', 'Next');
-        $button->render('todo.php', 'Download Original');
+        $button->render('todo.php', _('Album'), 'Album');
+        $button->render('todo.php', _('Previous'), 'Previous');
+        $button->render('todo.php', _('Next'), 'Next');
+        $button->render('todo.php', _('Download Original'), 'DownloadOriginal');
         ?>
       </p>
     </td>

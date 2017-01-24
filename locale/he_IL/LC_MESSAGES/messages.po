@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ktantanim\n"
+"POT-Creation-Date: 2017-01-24 10:04+0200\n"
+"PO-Revision-Date: 2017-01-24 10:34+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: /usr/local/google/home/aalbert/src/ktantanim-website\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: test.php:16 AlbumPhoto.php:43
+msgid "Download Original"
+msgstr "הורד מקור"
+
+#: AlbumPhoto.php:40
+msgid "Album"
+msgstr "אלבום"
+
+#: AlbumPhoto.php:41
+msgid "Previous"
+msgstr "קודם"
+
+#: AlbumPhoto.php:42
+msgid "Next"
+msgstr "הבא"

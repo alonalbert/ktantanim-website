@@ -3,6 +3,7 @@
 <?php
 require_once "HoverButton.php";
 require_once "Colors.php";
+require_once "Localization.php";
 ?>
 
 <head>
@@ -12,8 +13,7 @@ require_once "Colors.php";
 <body>
 
 <?php
-    $b = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$RED);
-    $b->render("http://google.com", "Download Original");
+echo _('Next');
 ?>
 
 

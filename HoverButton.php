@@ -4,22 +4,15 @@ require_once "TextImage.php";
 
 class HoverButton {
 
-  private $name;
-  private $text;
-  private $button;
-  private $hover;
-
-  const ROOT = "http://ktantanim.com/ktantanim/sites/Ktantanim/graphics/text/";
-
-  private $buttonImage = 'img/button.png';
+  private $buttonImage;
 
   private $hoverImage;
 
   private $fontName;
 
-  private $textSize = 13;
+  private $textSize;
 
-  private $colorArray = '#000000';
+  private $colorArray;
 
   public static function init() {
     echo '
@@ -41,16 +34,12 @@ class HoverButton {
     $this->colorArray = $colorArray;
   }
 
-  public function render($url, $text, $name = null) {
-    if ($name == null) {
-      $name = str_replace($text, ' ', '');
-    }
-
+  public function render($url, $text, $name) {
     $button = TextImage::create($this->buttonImage, $text, $this->fontName, $this->textSize, $this->colorArray);
     $hover = TextImage::create($this->hoverImage, $text, $this->fontName, $this->textSize, $this->colorArray);
 
     echo " 
-        <!-- $this->name Button -->
+        <!-- $name Button -->
         <script type='text/javascript'>
             " . $name . "Image=PreloadImage('" . $button . "');
             " . $name . "HoverImage=PreloadImage('" . $hover . "');
