@@ -34,10 +34,11 @@ class HoverButton {
     $this->colorArray = $colorArray;
   }
 
-  public function render($url, $text, $name) {
-    $button = TextImage::create($this->buttonImage, $text, $this->fontName, $this->textSize, $this->colorArray);
-    $hover = TextImage::create($this->hoverImage, $text, $this->fontName, $this->textSize, $this->colorArray);
+  public function render($url, $textId) {
+    $button = TextImage::create($this->buttonImage, $textId, $this->fontName, $this->textSize, $this->colorArray);
+    $hover = TextImage::create($this->hoverImage, $textId, $this->fontName, $this->textSize, $this->colorArray);
 
+    $name = str_replace(' ', '', $textId);
     echo " 
         <!-- $name Button -->
         <script type='text/javascript'>

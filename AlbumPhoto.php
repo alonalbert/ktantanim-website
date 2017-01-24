@@ -1,27 +1,38 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-
 <?php
 require_once "Colors.php";
 require_once "HoverButton.php";
 require_once "Localization.php";
+require_once "Photo.php";
 require_once "TextImage.php";
+
+$size = 'web';
+$albumPath = '2016/PhotoAlbums/01 Yosemite';
+$index = 0;
+$photos = glob("photos/$albumPath/*.jpg");
+$photo = $photos[$index];
+$photoBasename = pathinfo($photo, PATHINFO_BASENAME);
+$albumName = pathinfo($albumPath, PATHINFO_BASENAME);
+$album = preg_replace('/\d\d (.*)/', '${1}', $albumName);
+global $locale;
+?>
+
+<?php
+if (isHebrew()) {
+?>
+<html dir='rtl' xmlns="http://www.w3.org/1999/xhtml">
+<?php
+} else {
+?>
+<html dir='ltr' xmlns="http://www.w3.org/1999/xhtml">
+<?php
+}
 ?>
 
 <head>
-  <title>Photo - Our Gan</title>
+  <title><?php echo _('Photo') . " - $album" ?></title>
   <?php HoverButton::init() ?>
 </head>
 <body style="background-image: url(img/background.png)">
-<?php
-$size = 'web';
-$collection = '2016/PhotoAlbums';
-$album = '01 Our Gan';
-$index = 0;
-$photos = glob("photos/$collection/$album/*.jpg");
-$photo = $photos[$index];
-$photoBasename = pathinfo($photo, PATHINFO_BASENAME);
-?>
-
 <table cellspacing="0" cellpadding="0" width="100%" border="0">
   <tbody>
   <tr>
@@ -29,7 +40,7 @@ $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
       <p style="vertical-align:middle;text-align:center">
         <!-- Page Title -->
         <?php
-        echo '<img src="' . TextImage::create('img/title.png', substr($album, 3), 'davidbd', 18, Colors::$YELLOW) . '"/>'
+        echo '<img src="' . TextImage::create('img/title.png', $album, 'davidbd', 18, Colors::$YELLOW) . '"/>'
         ?>
 
         <br/>
@@ -38,10 +49,10 @@ $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
         <?php
         $button = new HoverButton('img/button.png', 'img/button-hover.png', 'david', 13, Colors::$BLACK);
 
-        $button->render('todo.php', _('Album'), 'Album');
-        $button->render('todo.php', _('Previous'), 'Previous');
-        $button->render('todo.php', _('Next'), 'Next');
-        $button->render('todo.php', _('Download Original'), 'DownloadOriginal');
+        $button->render('todo.php', message('Album'));
+        $button->render('todo.php', message('Previous'));
+        $button->render('todo.php', message('Next'));
+        $button->render('todo.php', message('Download Original'));
         ?>
       </p>
     </td>
@@ -51,8 +62,8 @@ $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
 
 <div align="center">
   <?php
-  echo "<a href='todo'><img alt='$photoBasename' src='Photo.php?image=$photo&size=600'/></a>"
-//  echo "<a href='todo'><img alt='$photoBasename' src='photos/2016/PhotoAlbums/01%20Our%20Gan/600/IMG_20160827_153007.jpg'/></a>"
+  $resize = Photo::resize($photo, '600');
+  echo "<a href='todo'><img alt='$photoBasename' src='$resize'/></a>"
   ?>
 
 </div>
