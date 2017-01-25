@@ -1,4 +1,6 @@
 <?php
+require_once "UriBuilder.php";
+
 $locale = "he";
 if (isSet($_GET["locale"])) {
   $locale = $_GET["locale"];
@@ -23,4 +25,27 @@ function isHebrew() {
   return $locale == "he_IL";
 }
 
+function startHtml() {
+  if (isHebrew()) {
+    echo('<html dir="rtl" xmlns="http://www.w3.org/1999/xhtml">');
+  } else {
+    echo('<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">');
+  }
+}
+
+function languageSwitcher() {
+  if (isHebrew()) {
+    $label = "English";
+    $newLocale = "en";
+  } else {
+    $label = "עברית";
+    $newLocale = "he";
+  }
+  $uri = new UriBuilder($_SERVER['REQUEST_URI']);
+  $uri->setParam('locale', $newLocale);
+  $target = $uri->build();
+  echo '<p style="vertical-align:middle;text-align:center">';
+  echo "<a href='$target'>$label</a>";
+  echo '</p>';
+}
 ?>

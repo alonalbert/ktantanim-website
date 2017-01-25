@@ -13,26 +13,18 @@ $photo = $photos[$index];
 $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
 $albumName = pathinfo($albumPath, PATHINFO_BASENAME);
 $album = preg_replace('/\d\d (.*)/', '${1}', $albumName);
-global $locale;
 ?>
 
-<?php
-if (isHebrew()) {
-?>
-<html dir='rtl' xmlns="http://www.w3.org/1999/xhtml">
-<?php
-} else {
-?>
-<html dir='ltr' xmlns="http://www.w3.org/1999/xhtml">
-<?php
-}
-?>
+<?php startHtml() ?>
 
 <head>
   <title><?php echo _('Photo') . " - $album" ?></title>
   <?php HoverButton::init() ?>
 </head>
 <body style="background-image: url(img/background.png)">
+<?php
+languageSwitcher();
+?>
 <table cellspacing="0" cellpadding="0" width="100%" border="0">
   <tbody>
   <tr>
