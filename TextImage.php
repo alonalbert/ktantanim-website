@@ -42,6 +42,7 @@ class TextImage {
       //
       $box = imagettfbbox($textSize, 0, $fonfFile, 'XXXX');
       $marginWidth = $box[2] - $box[0];
+      $marginHeight = $box[1] - $box[7];
 
       // Get size of image
       //
@@ -58,8 +59,8 @@ class TextImage {
         $newWidth = $width;
       }
 
-      if ($height < $textHeight) {
-        $newHeight = $textHeight;
+      if ($height < $textHeight + $marginHeight) {
+        $newHeight = $textHeight + $marginHeight;
       } else {
         $newHeight = $height;
       }

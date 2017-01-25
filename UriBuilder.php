@@ -21,4 +21,8 @@ class UriBuilder {
   public function build() {
     return  $this->path . '?' . http_build_query($this->params);
   }
+
+  public function setPath($path) {
+    $this->path = $path;
+  }
 }

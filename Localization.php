@@ -25,12 +25,8 @@ function isHebrew() {
   return $locale == "he_IL";
 }
 
-function startHtml() {
-  if (isHebrew()) {
-    echo('<html dir="rtl" xmlns="http://www.w3.org/1999/xhtml">');
-  } else {
-    echo('<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">');
-  }
+function direction() {
+  return isHebrew() ? 'rtl' : 'ltr';
 }
 
 function languageSwitcher() {

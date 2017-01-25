@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ktantanim\n"
-"POT-Creation-Date: 2017-01-24 13:39+0200\n"
-"PO-Revision-Date: 2017-01-24 13:40+0200\n"
+"POT-Creation-Date: 2017-01-25 15:21+0200\n"
+"PO-Revision-Date: 2017-01-25 15:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: he\n"
@@ -15,22 +15,34 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: test.php:16 AlbumPhoto.php:42
-msgid "Next"
-msgstr "הבא"
-
-#: AlbumPhoto.php:19
-msgid "Photo"
-msgstr "תמונה"
-
-#: AlbumPhoto.php:40
+#: AlbumPage.php:21 AlbumPhoto.php:51
 msgid "Album"
 msgstr "אלבום"
 
-#: AlbumPhoto.php:41
+#: AlbumPage.php:36
+msgid "Home"
+msgstr "דף הבית"
+
+#: AlbumPage.php:37
+msgid "Up"
+msgstr "מעלה"
+
+#: AlbumPage.php:120
+msgid "Download entire album"
+msgstr "הורד את כל האלבום"
+
+#: AlbumPhoto.php:23
+msgid "Photo"
+msgstr "תמונה"
+
+#: AlbumPhoto.php:56
 msgid "Previous"
 msgstr "קודם"
 
-#: AlbumPhoto.php:43
+#: AlbumPhoto.php:59
+msgid "Next"
+msgstr "הבא"
+
+#: AlbumPhoto.php:61
 msgid "Download Original"
 msgstr "הורד מקור"

@@ -1,17 +1,5 @@
 <?php
-require_once "Localization.php";
-?>
+require_once "Utils.php";
 
-<html>
-<head>
-</head>
-<body style="background-image: url(img/background.png)">
-
-<?php
-  languageSwitcher();
-echo _('Next');
-?>
-<br/>
-</body>
-</html>
+utils\createZipFile("photos/2016/PhotoAlbums/01 Yosemite", 'Yosemite.zip', "*.jpg *JPG");
 
