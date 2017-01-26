@@ -7,12 +7,22 @@ require_once "TextImage.php";
 require_once "UriBuilder.php";
 require_once "Utils.php";
 
+session_start();
+
 $albumPath = 'photos/' . $_GET['album'];
 $photos = glob("$albumPath/*.jpg");
 $collectionPath = pathinfo($albumPath, PATHINFO_DIRNAME);
 $album = pathinfo($albumPath, PATHINFO_BASENAME);
 $albumTitle = utils\getAlbumTitle($album);
 $requestUri = $_SERVER['REQUEST_URI'];
+
+if ($albumTitle == 'Our Gan') {
+  if (!isset($_SESSION['username'])) {
+    $redirect = urlencode($_SERVER['REQUEST_URI']);
+    header("location:main_login.php?redirect=$redirect");
+    die;
+  }
+}
 ?>
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
