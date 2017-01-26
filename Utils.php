@@ -8,6 +8,11 @@ function getAlbumTitle($album) {
 function createZipFile($path, $name, $files) {
   $cwd = getcwd();
   chdir($path);
-  shell_exec("zip -u $name $files");
+  $cwd = getcwd();
+  if (file_exists($name)) {
+    shell_exec("zip -u $name $files");
+  } else {
+    shell_exec("zip $name $files");
+  }
   chdir($cwd);
 }
