@@ -1,4 +1,6 @@
 <?php
+const CLIENT_ID = '915378992994-1pe7pbuqdpvmcpqtlkct00cuslbkcjhu.apps.googleusercontent.com';
+
 require_once "Colors.php";
 require_once "Button.php";
 require_once "Localization.php";
@@ -17,9 +19,9 @@ $albumTitle = utils\getAlbumTitle($album);
 $requestUri = $_SERVER['REQUEST_URI'];
 
 if ($albumTitle == 'Our Gan') {
-  if (!isset($_SESSION['username'])) {
+  if (!isset($_SESSION['SIGNED_ID']) || $_SESSION['SIGNED_ID'] != 'YES') {
     $redirect = urlencode($_SERVER['REQUEST_URI']);
-    header("location:main_login.php?redirect=$redirect");
+    header("location:Login.php?redirect=$redirect");
     die;
   }
 }
@@ -27,10 +29,32 @@ if ($albumTitle == 'Our Gan') {
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <meta name="google-signin-client_id" content="<?= CLIENT_ID ?>">
+  <script>
+    function onLoad() {
+      console.log('onLoad()');
+      gapi.load('auth2', function() {
+        console.log('Loaded()');
+        gapi.auth2.init();
+      });
+    }
+
+    function signOut() {
+      console.log('Signed out.');
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        console.log('User signed out.');
+        window.location = "Logout.php";
+      });
+    }
+  </script>
   <title><?php echo _('Album') . " - $albumTitle" ?></title>
   <?php Button::init() ?>
 </head>
 <body style="background-image: url(img/background.png)">
+<a href="#" onclick="signOut();">Sign out</a>
 <?php
 languageSwitcher();
 ?>
@@ -47,7 +71,7 @@ languageSwitcher();
         ?>
         <br/>
         <!-- Page Title -->
-        <img src='<?= TextImage::create('img/title.png', $albumTitle, 'davidbd', 18, Colors::$YELLOW) ?>' />
+        <img src='<?= TextImage::create('img/title.png', $albumTitle, 'davidbd', 18, Colors::$YELLOW) ?>'/>
         '
         <br/>
 
@@ -67,10 +91,10 @@ languageSwitcher();
           $siblingTitle = utils\getAlbumTitle($dir->getFilename());
           if ($siblingTitle == $albumTitle) {
             $img = TextImage::create('img/current.png', $albumTitle, 'david', 13, Colors::$BLACK);
-        ?>
+            ?>
             <!-- Current Album needs no button -->
-            <img src='<?= $img ?>' style='border: none; vertical-align: middle' />
-        <?php
+            <img src='<?= $img ?>' style='border: none; vertical-align: middle'/>
+            <?php
           } else {
             $siblingPath = substr($dir->getPathname(), strlen('photos/'));
             $uri = new UriBuilder($requestUri);

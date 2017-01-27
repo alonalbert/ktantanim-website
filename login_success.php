@@ -5,7 +5,7 @@ if(!isset($_SESSION['username'])) {
     echo "$index=$item  <bt/>";
   }
   echo "Session not set";
-  header("location:main_login.php");
+  header("location:Login.php");
 }
 ?>
 
