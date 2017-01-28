@@ -15,8 +15,8 @@ function validate($token) {
   if (time() > $tokenInfo->exp) {
     return false;
   }
-  $users = json_decode(file_get_contents('users.json'));
-
+  $config = json_decode(file_get_contents('config.json'));
+  $users = $config->users;
   $email = $tokenInfo->email;
   if (!in_array($email, $users)) {
     return false;
@@ -26,7 +26,7 @@ function validate($token) {
 
 $token=$_GET['token'];
 if (validate($token)) {
-  $_SESSION['SIGNED_ID'] = "YES";
+  $_SESSION['token'] = $token;
   $redirect=$_GET['redirect'];
   header("Location: $redirect");
   die;

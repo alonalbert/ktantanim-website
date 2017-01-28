@@ -4,22 +4,29 @@ const CLIENT_ID = '915378992994-1pe7pbuqdpvmcpqtlkct00cuslbkcjhu.apps.googleuser
 require_once "Colors.php";
 require_once "Button.php";
 require_once "Localization.php";
-require_once "Photo.php";
 require_once "TextImage.php";
 require_once "UriBuilder.php";
 require_once "Utils.php";
 
 session_start();
 
-$albumPath = 'photos/' . $_GET['album'];
-$photos = glob("$albumPath/*.jpg");
-$collectionPath = pathinfo($albumPath, PATHINFO_DIRNAME);
-$album = pathinfo($albumPath, PATHINFO_BASENAME);
-$albumTitle = utils\getAlbumTitle($album);
+$config = json_decode(file_get_contents('config.json'));
+
+$year = $_GET['y'];
+$section = $_GET['s'];
+$album=$_GET['a'];
+
+$root=$config->photosRoot;
+$sectionPath = sprintf('%s/%s/%s', $root, $year, $section);
+$albumWildcard = sprintf('%s/%s*', $sectionPath, $album);
+$albumPath = glob($albumWildcard)[0];
+
+$photos = glob("$albumPath/*.[jJ][pP][gG]");
+$albumTitle = utils\getAlbumTitle(pathinfo($albumPath, PATHINFO_BASENAME));
 $requestUri = $_SERVER['REQUEST_URI'];
 
 if ($albumTitle == 'Our Gan') {
-  if (!isset($_SESSION['SIGNED_ID']) || $_SESSION['SIGNED_ID'] != 'YES') {
+  if (!isset($_SESSION['token']) || $_SESSION['token'] == '') {
     $redirect = urlencode($_SERVER['REQUEST_URI']);
     header("location:Login.php?redirect=$redirect");
     die;
@@ -81,14 +88,15 @@ languageSwitcher();
 
         $button = new Button('david', 13, Colors::$BLACK, 'img/button.png', 'img/button-hover.png');
         $dirs = array();
-        foreach (new DirectoryIterator($collectionPath) as $file) {
+        foreach (new DirectoryIterator($sectionPath) as $file) {
           if ($file->isDir() && !$file->isDot()) {
             $dirs[count($dirs)] = clone $file;
           }
         }
         natsort($dirs);
         foreach ($dirs as $dir) {
-          $siblingTitle = utils\getAlbumTitle($dir->getFilename());
+          $albumDirname = $dir->getFilename();
+          $siblingTitle = utils\getAlbumTitle($albumDirname);
           if ($siblingTitle == $albumTitle) {
             $img = TextImage::create('img/current.png', $albumTitle, 'david', 13, Colors::$BLACK);
             ?>
@@ -96,9 +104,8 @@ languageSwitcher();
             <img src='<?= $img ?>' style='border: none; vertical-align: middle'/>
             <?php
           } else {
-            $siblingPath = substr($dir->getPathname(), strlen('photos/'));
             $uri = new UriBuilder($requestUri);
-            $uri->setParam('album', $siblingPath);
+            $uri->setParam('a', substr($albumDirname, 0, 2));
             $siblingUri = $uri->build();
             $button->render("$siblingUri", $siblingTitle);
           }
@@ -125,17 +132,30 @@ languageSwitcher();
       ';
     $row = 0;
     $col = 0;
+    $size = $config->photoSizes->thumbnail;
+
     for ($i = 0; $i < count($photos); $i++) {
-      $photo = $photos[$i];
-      $thumb = Photo::resize($photo, 100);
-      $uri = new UriBuilder($requestUri);
-      $uri->setPath('AlbumPhoto.php');
-      $uri->setParam('index', 0);
-      $link = $uri->build();
-      echo "<a><a href='$link'><img src='$thumb' /></a>
-      ";
+    $uri = new UriBuilder($requestUri);
+    $uri->setPath('AlbumPhoto.php');
+    $uri->setParam('i', $i);
+    $link = $uri->build();
+    $photo = $photos[$i];
+    list($width, $height) = getimagesize($photo);
+    if ($width >= $height) {
+      $w = $size;
+      $h = $size * $height / $width;
+    } else {
+      $w = $size * $width / $height;
+      $h = $size;
+    }
+
+    ?>
+    <a href='<?= $link ?>' class="no-underline">
+      <img src='Photo.php?filename=<?=  $photo ?>&size=thumbnail' style='width:<?= $w ?>px;height:<?= $h ?>px'/>
+    </a>
+    <?php
       $col++;
-      if ($row % 2 == 0 && $col >= 3 || $col >= 4) {
+      if ($row % 2 == 0 && $col >= 4 || $col >= 5) {
         $col = 0;
         $row++;
         echo '

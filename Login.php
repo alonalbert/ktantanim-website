@@ -15,7 +15,7 @@ const CLIENT_ID = '915378992994-1pe7pbuqdpvmcpqtlkct00cuslbkcjhu.apps.googleuser
       console.log('Token: ' + token);
       console.log('Redirect: ' + redirect);
 
-      window.location = "LoginCheckToken.php?token=" + token + "&redirect=" + redirect;
+      window.location = "LoginCheckToken.php?token=" + token + "&redirect=" + encodeURIComponent(redirect);
     }
     function getParameterByName(name) {
       url = window.location.href;

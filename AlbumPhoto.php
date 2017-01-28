@@ -2,13 +2,21 @@
 require_once "Colors.php";
 require_once "Button.php";
 require_once "Localization.php";
-require_once "Photo.php";
 require_once "TextImage.php";
 require_once "UriBuilder.php";
 
-$albumPath = $_GET['album'];
-$index = $_GET['index'];
-$photos = glob("photos/$albumPath/*.jpg");
+$config = json_decode(file_get_contents('config.json'));
+
+$year = $_GET['y'];
+$section = $_GET['s'];
+$album=$_GET['a'];
+$index = $_GET['i'];
+
+$root=$config->photosRoot;
+$albumWildcard = sprintf('%s/%s/%s/%s*', $root, $year, $section, $album);
+$albumPath = glob($albumWildcard)[0];
+
+$photos = glob("$albumPath/*.[jJ][pP][gG]");
 $photo = $photos[$index];
 $photoBasename = pathinfo($photo, PATHINFO_BASENAME);
 $photoExt = pathinfo($photo, PATHINFO_EXTENSION);
@@ -18,7 +26,6 @@ $requestUri = $_SERVER['REQUEST_URI'];
 ?>
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <title><?php echo _('Photo') . " - $albumTitle" ?></title>
   <?php Button::init() ?>
@@ -46,16 +53,16 @@ languageSwitcher();
 
         $uri = new UriBuilder($requestUri);
         $uri->setPath('AlbumPage.php');
-        $uri->setParam($index, null);
+        $uri->setParam('i', null);
         $albumPageUri = $uri->build();
         $button->render($albumPageUri, message('Album'));
 
         $uri = new UriBuilder($_SERVER['REQUEST_URI']);
 
-        $uri->setParam('index', $index > 0 ? $index - 1 : $count - 1);
+        $uri->setParam('i', $index > 0 ? $index - 1 : $count - 1);
         $button->render($uri->build(), message('Previous'));
 
-        $uri->setParam('index', ($index + 1) % $count);
+        $uri->setParam('i', ($index + 1) % $count);
         $button->render($uri->build(), message('Next'));
 
         $button->render("$photo", message('Download Original'), sprintf("%s-%03d.%s",
@@ -70,11 +77,7 @@ languageSwitcher();
 </table>
 
 <div align="center">
-  <?php
-  $resize = Photo::resize($photo, '600');
-  echo "<a href='$albumPageUri'><img alt='$photoBasename' src='$resize'/></a>"
-  ?>
-
+  <a href='<?= $albumPageUri ?>'><img alt='$photoBasename' src='Photo.php?filename=<?= $photo ?>&size=web'/></a>
 </div>
 </body>
 </html>

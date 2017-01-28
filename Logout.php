@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['SIGNED_ID'] = "NO";
+$_SESSION['token'] = "";
 ?>
 
 <html>

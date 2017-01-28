@@ -17,7 +17,7 @@ class Button {
   public static function init() {
     echo '
             <style>
-                .hover-button { text-decoration: none}
+                .no-underline { text-decoration: none}
             </style>
             <script type="text/javascript">
               function PreloadImage(path) {
@@ -37,6 +37,7 @@ class Button {
 
   public function render($url, $textId, $downloadName = null) {
     $button = TextImage::create($this->buttonImage, $textId, $this->fontName, $this->textSize, $this->colorArray);
+    list($width, $height) = getimagesize($button);
 
     $name = str_replace(' ', '', $textId);
 
@@ -51,11 +52,11 @@ class Button {
               " . $name . "HoverImage=PreloadImage('" . $hover . "');
           </script>
           
-          <a href='$url' $download class='hover-button'
+          <a href='$url' $download class='no-underline'
               onmouseover=" . '"' . "document['" . $name . "Button'].src=" . $name . "HoverImage.src" . '"' . "
               onmouseout=" . '"' . "document['" . $name . "Button'].src=" . $name . "Image.src" . '"' . ">
               <img alt='" . $name . "' src='" . $button . "'
-                  style='border: none; vertical-align: middle' id='" . $name . "Button' name='" . $name . "Button' />
+                  style='border: none; vertical-align: middle; width: $width; height: $height' id='" . $name . "Button' name='" . $name . "Button' />
           </a>";
     } else {
       echo "

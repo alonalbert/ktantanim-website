@@ -1,0 +1,11 @@
+{
+  "photosRoot" : "photos",
+  "photoSizes": {
+    "web" : 800,
+    "thumbnail" : 150
+  },
+  "users" : [
+    "alon.albert@gmail.com",
+    "ilana.albert@gmail.com"
+  ]
+}
