@@ -36,29 +36,11 @@ if ($albumTitle == 'Our Gan') {
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=initGoogleAuth" async defer></script>
   <meta name="google-signin-client_id" content="<?= CLIENT_ID ?>">
-  <script>
-    function onLoad() {
-      console.log('onLoad()');
-      gapi.load('auth2', function() {
-        console.log('Loaded()');
-        gapi.auth2.init();
-      });
-    }
-
-    function signOut() {
-      console.log('Signed out.');
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-        console.log('User signed out.');
-        window.location = "Logout.php";
-      });
-    }
-  </script>
   <title><?php echo _('Album') . " - $albumTitle" ?></title>
-  <?php Button::init() ?>
 </head>
 <body style="background-image: url(img/background.png)">
 <a href="#" onclick="signOut();">Sign out</a>
@@ -70,7 +52,7 @@ languageSwitcher();
   <tr>
     <td>
       <!-- Top of Page Links -->
-      <p style="vertical-align:middle;text-align:center">
+      <p>
         <?php
         $navigate = new Button('david', 10, Colors::$BLACK, 'img/navigate.png');
         $navigate->render('todo.php', message('Home'));
@@ -119,7 +101,7 @@ languageSwitcher();
 
 <h2 style='text-align:center;font-family:Droid Serif,serif'><?= $albumTitle ?></h2>
 
-<p style="text-align:center">
+<p>
   <img alt="horizontal rule" src="img/seperator.png"/>
 </p>
 
@@ -167,7 +149,7 @@ languageSwitcher();
     ?>
   </table>
 </div>
-<div align="center">
+<p>
   <?php
 
   $zipfile = str_replace(' ', '', $albumTitle) . '.zip';
@@ -176,7 +158,7 @@ languageSwitcher();
   ?>
   <a href='<?= "$albumPath/$zipfile" ?>' download='<?= $zipfile ?>'><?= $label ?></a>
 
-</div>
+</p>
 
 </body>
 </html>

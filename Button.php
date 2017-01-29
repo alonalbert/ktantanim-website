@@ -14,19 +14,6 @@ class Button {
 
   private $colorArray;
 
-  public static function init() {
-    echo '
-            <style>
-                .no-underline { text-decoration: none}
-            </style>
-            <script type="text/javascript">
-              function PreloadImage(path) {
-                var image = new Image(); image.src=path; return image;
-              }
-            </script>
-            ';
-  }
-
   public function __construct($fontName, $textSize, $colorArray, $buttonImage, $hoverImage = null) {
     $this->fontName = $fontName;
     $this->textSize = $textSize;
@@ -52,16 +39,18 @@ class Button {
               " . $name . "HoverImage=PreloadImage('" . $hover . "');
           </script>
           
-          <a href='$url' $download class='no-underline'
+          <a href='$url' $download class='button-link'
               onmouseover=" . '"' . "document['" . $name . "Button'].src=" . $name . "HoverImage.src" . '"' . "
               onmouseout=" . '"' . "document['" . $name . "Button'].src=" . $name . "Image.src" . '"' . ">
-              <img alt='" . $name . "' src='" . $button . "'
-                  style='border: none; vertical-align: middle; width: $width; height: $height' id='" . $name . "Button' name='" . $name . "Button' />
+              <img src='" . $button . "' class='button-image'
+                  style='width: $width; height: $height' id='${name}Button' name='${name}Button' />
           </a>";
     } else {
       echo "
         <!-- $name Button -->
-        <a href='$url' $download class='hover-button'><img src='$button' style='vertical-align:middle;border:none'/>
+        <a href='$url' $download class='button-link'>
+          <img src='$button' class='button-image' style='width: $width; height: $height'/>
+        </a>
         ";
     }
   }

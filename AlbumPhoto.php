@@ -27,8 +27,9 @@ $requestUri = $_SERVER['REQUEST_URI'];
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js"></script>
   <title><?php echo _('Photo') . " - $albumTitle" ?></title>
-  <?php Button::init() ?>
 </head>
 <body style="background-image: url(img/background.png)">
 <?php
@@ -38,7 +39,7 @@ languageSwitcher();
   <tbody>
   <tr>
     <td>
-      <p style="vertical-align:middle;text-align:center">
+      <p>
         <!-- Page Title -->
         <?php
         echo '<img src="' . TextImage::create('img/title.png', $albumTitle, 'davidbd', 18, Colors::$YELLOW) . '"/>'

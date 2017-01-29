@@ -1,0 +1,17 @@
+.button-link {
+  text-decoration: none;
+}
+
+.button-image {
+  border: none;
+  vertical-align: middle;
+}
+
+p {
+  vertical-align:middle;
+  text-align:center;
+}
+
+body {
+  overflow-x: hidden;
+}
