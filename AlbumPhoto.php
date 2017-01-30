@@ -1,9 +1,12 @@
 <?php
+const CLIENT_ID = '915378992994-1pe7pbuqdpvmcpqtlkct00cuslbkcjhu.apps.googleusercontent.com';
+
 require_once "Colors.php";
 require_once "Button.php";
 require_once "Localization.php";
 require_once "TextImage.php";
 require_once "UriBuilder.php";
+require_once "Utils.php";
 
 $config = json_decode(file_get_contents('config.json'));
 
@@ -23,15 +26,20 @@ $photoExt = pathinfo($photo, PATHINFO_EXTENSION);
 $album = pathinfo($albumPath, PATHINFO_BASENAME);
 $albumTitle = preg_replace('/\d\d (.*)/', '${1}', $album);
 $requestUri = $_SERVER['REQUEST_URI'];
+
+\utils\checkToken();
 ?>
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" href="site.css">
   <script src="site.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=initGoogleAuth" async defer></script>
+  <meta name="google-signin-client_id" content="<?= CLIENT_ID ?>">
   <title><?php echo _('Photo') . " - $albumTitle" ?></title>
 </head>
 <body style="background-image: url(img/background.png)">
+<a href="#" onclick="signOut();">Sign out</a>
 <?php
 languageSwitcher();
 ?>

@@ -1,4 +1,6 @@
 <?php
+require_once "Utils.php";
+\utils\checkToken();
 
 $config = json_decode(file_get_contents('config.json'), true);
 $sizes = $config['photoSizes'];

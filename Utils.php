@@ -16,3 +16,12 @@ function createZipFile($path, $name, $files) {
   }
   chdir($cwd);
 }
+
+function checkToken() {
+  session_start();
+  if (!isset($_SESSION['token']) || $_SESSION['token'] == '') {
+    $redirect = urlencode($_SERVER['REQUEST_URI']);
+    header("location:Login.php?redirect=$redirect");
+    die;
+  }
+}

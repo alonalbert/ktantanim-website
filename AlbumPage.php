@@ -8,8 +8,6 @@ require_once "TextImage.php";
 require_once "UriBuilder.php";
 require_once "Utils.php";
 
-session_start();
-
 $config = json_decode(file_get_contents('config.json'));
 
 $year = $_GET['y'];
@@ -23,15 +21,11 @@ $albumPath = glob($albumWildcard)[0];
 
 $photos = glob("$albumPath/*.[jJ][pP][gG]");
 $albumTitle = utils\getAlbumTitle(pathinfo($albumPath, PATHINFO_BASENAME));
+
 $requestUri = $_SERVER['REQUEST_URI'];
 
-if ($albumTitle == 'Our Gan') {
-  if (!isset($_SESSION['token']) || $_SESSION['token'] == '') {
-    $redirect = urlencode($_SERVER['REQUEST_URI']);
-    header("location:Login.php?redirect=$redirect");
-    die;
-  }
-}
+\utils\checkToken();
+
 ?>
 
 <html dir="<?= direction() ?>" xmlns="http://www.w3.org/1999/xhtml">
