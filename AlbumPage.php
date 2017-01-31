@@ -145,13 +145,11 @@ languageSwitcher();
 </div>
 <p>
   <?php
-
-  $zipfile = str_replace(' ', '', $albumTitle) . '.zip';
-  utils\createZipFile($albumPath, $zipfile, '*.jpg *.JPG');
-  $label = _('Download entire album');
+  $zip = str_replace(' ', '', $albumTitle) . '.zip';
   ?>
-  <a href='<?= "$albumPath/$zipfile" ?>' download='<?= $zipfile ?>'><?= $label ?></a>
-
+  <a href='<?= "AlbumZip.php?path=$albumPath&zip=$zip" ?>' download='<?= str_replace(' ', '', $albumTitle) . '.zip' ?>'>
+    <?= _('Download entire album') ?>
+  </a>
 </p>
 
 </body>

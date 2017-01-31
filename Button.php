@@ -39,7 +39,7 @@ class Button {
               " . $name . "HoverImage=PreloadImage('" . $hover . "');
           </script>
           
-          <a href='$url' $download class='button-link'
+          <a href='$url' $download class='no-underline'
               onmouseover=" . '"' . "document['" . $name . "Button'].src=" . $name . "HoverImage.src" . '"' . "
               onmouseout=" . '"' . "document['" . $name . "Button'].src=" . $name . "Image.src" . '"' . ">
               <img src='" . $button . "' class='button-image'
@@ -48,7 +48,7 @@ class Button {
     } else {
       echo "
         <!-- $name Button -->
-        <a href='$url' $download class='button-link'>
+        <a href='$url' $download class='no-underline'>
           <img src='$button' class='button-image' style='width: $width; height: $height'/>
         </a>
         ";
